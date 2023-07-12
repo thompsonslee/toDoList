@@ -1,7 +1,7 @@
 import './style.css';
-import {storage} from "./utils/storage.js"
-import {maker} from "./utils/maker.js"
+import {UI} from "./utils/UI.js"
 
-const storageFunc = storage()
-console.log(storageFunc)
+UI.loadHomepage()
+
+
 

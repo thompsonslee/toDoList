@@ -1,10 +1,16 @@
-export function storage(){
-    const currentDate = new Date()
-    const taskStorage = []
+import {task} from "./task.js"
 
-    const getStorage = () => taskStorage
+export class storage{
 
-    const getTodayTasks = () =>{
+    taskStorage = []
+
+    getStorage = () => taskStorage
+
+    addToStorage = (task) => {
+        taskStorage.push(task)
+    }
+
+    getTodayTasks = () =>{
         const todayTasks = []
         for(let i = 0 ; i < taskStorage.length ; i++){
             if (taskStorage[i].Date === currentDate){
@@ -14,7 +20,7 @@ export function storage(){
         return todayTasks
     }
 
-    const getWeekTasks = () =>{
+    getWeekTasks = () =>{
         const weekTasks = []
         for(let i = 0; i < taskStorage.length ; i++){
             for(let j = 0; j < 7 ; j++){
@@ -27,7 +33,7 @@ export function storage(){
         return weekTasks
     }
 
-    const getProjectTasks = (project) =>{
+    getProjectTasks = (project) =>{
         let projectArray = []
         for(let i = 0; i < taskStorage.length ; i++){
             if(taskStorage[i].project === project){
@@ -37,5 +43,12 @@ export function storage(){
         return projectArray
     }
 
-    return{getStorage,getTodayTasks,getWeekTasks,getProjectTasks}
+    createNewTask = () =>{
+        const name = document.getElementById("text-input-popup").value
+        const date = document.getElementById("date-input-popup").value
+
+        const classToStore = new task(name,date,"none")
+
+        addToStorage(classToStore)
+    }
 }
