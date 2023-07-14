@@ -1,23 +1,26 @@
-import {task} from "./task.js"
+import task from "./task.js"
 
-export class storage{
+export default class storage{
 
-    taskStorage = []
+    static taskStorage = []
 
-    getStorage = () => taskStorage
-
-    addToStorage = (task) => {
-        taskStorage.push(task)
+    static createNewTask(project){
+        const name = document.getElementById("text-input-popup").value
+        const date = document.getElementById("date-input-popup").value
+        
+        let Task = new task(name,date,project)
+        this.addToStorage(Task)
     }
 
-    getTodayTasks = () =>{
-        const todayTasks = []
-        for(let i = 0 ; i < taskStorage.length ; i++){
-            if (taskStorage[i].Date === currentDate){
-                todayTasks.push(taskStorage[i])
-            }
-        }
-        return todayTasks
+    static addToStorage(task){
+        storage.taskStorage.push(task)
+        console.log (storage.taskStorage)
+    }
+}
+    
+
+    /*addToStorage = (task) => {
+        taskStorage.push(task)
     }
 
     getWeekTasks = () =>{
@@ -51,4 +54,4 @@ export class storage{
 
         addToStorage(classToStore)
     }
-}
+}*/

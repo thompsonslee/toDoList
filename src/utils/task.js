@@ -1,4 +1,4 @@
-export class task{
+export default class task{
     constructor(name,date,project){
         this.name = name
         this.date = date
