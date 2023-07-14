@@ -14,7 +14,41 @@ export default class UI{
         inbox.addEventListener("click",UI.loadInboxPage)
         today.addEventListener("click", UI.loadTodayPage)
         week.addEventListener("click", UI.loadWeekPage)
+        UI.initProjectButtons()
         UI.loadInboxPage()
+    }
+
+    static initProjectButtons(){
+        const projectInput = document.getElementById("project-input")
+        const projectAddButton = document.getElementById("project-add-button")
+        const projectRemoveButton = document.getElementById("project-cancel-button")
+
+        projectAddButton.addEventListener("click",() =>{
+            if (projectInput.value === ""){
+                console.log("need project name")
+            }
+            else{
+                storage.createNewProject()
+                UI.refreshProjectList()
+            }
+
+        })
+    }
+
+    static refreshProjectList(){
+        const projectList = document.getElementById("projects-list")
+        projectList.innerHTML = ""
+        storage.projectStorage.map(project => {
+            const listItem = document.createElement("li")
+            listItem.innerHTML = project
+            listItem.addEventListener("click", ()=> {UI.loadProjectPage(project)})
+            projectList.appendChild(listItem)
+            
+        })
+    }
+    static loadProjectPage(project){
+        title.innerHTML = project
+        UI.refreshTaskList()
     }
     
     
@@ -49,7 +83,7 @@ export default class UI{
             </div>
         </div>`
         taskList.appendChild(taskFunction)
-    UI.initTaskButtons(project)
+        UI.initTaskButtons(project)
     }
     static initTaskButtons(project){
         const textInput = document.getElementById("text-input-popup")
@@ -66,7 +100,7 @@ export default class UI{
             }
             else{
                 storage.createNewTask(project)
-                UI.refreshTaskList(project)
+                UI.refreshTaskList()
             }
             
         })
@@ -102,6 +136,10 @@ export default class UI{
         if(title.innerHTML === "Inbox"){
             storage.taskStorage.map(task => UI.createTaskDiv(task))
             UI.createTaskFunction("none") 
+        }
+        else{
+            storage.getTasksForProject(title.innerHTML).map(task => UI.createTaskDiv(task))
+            UI.createTaskFunction(title.innerHTML)
         }
     }
 

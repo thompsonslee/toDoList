@@ -4,6 +4,13 @@ import UI from "./UI.js"
 export default class storage{
 
     static taskStorage = []
+    static projectStorage = []
+
+    static createNewProject(){
+        const project = document.getElementById("project-input").value
+        storage.projectStorage.push(project)
+        console.log(storage.projectStorage)
+    }
 
     static createNewTask(project){
         const name = document.getElementById("text-input-popup").value
@@ -25,6 +32,15 @@ export default class storage{
                 console.log(storage.taskStorage)
             }
         }
+    }
+    static getTasksForProject(project){
+        const thisProjectStorage = []
+        for(let i = 0 ; i < storage.taskStorage.length ; i++){
+            if(storage.taskStorage[i].project === project){
+                thisProjectStorage.push(storage.taskStorage[i])
+            }
+        }
+        return thisProjectStorage
     }
 }
     
