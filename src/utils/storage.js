@@ -1,4 +1,5 @@
 import task from "./task.js"
+import UI from "./UI.js"
 
 export default class storage{
 
@@ -16,12 +17,19 @@ export default class storage{
         storage.taskStorage.push(task)
         console.log (storage.taskStorage)
     }
+    static removeFromStorage(taskName){
+        for(let i = 0 ; i < storage.taskStorage.length ; i++){
+            console.log(storage.taskStorage[i])
+            if (storage.taskStorage[i].name === taskName){
+                storage.taskStorage.splice(i,1)
+                console.log(storage.taskStorage)
+            }
+        }
+    }
 }
     
 
-    /*addToStorage = (task) => {
-        taskStorage.push(task)
-    }
+    /*
 
     getWeekTasks = () =>{
         const weekTasks = []

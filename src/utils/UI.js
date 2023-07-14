@@ -1,5 +1,6 @@
 import task from "./UI.js"
 import storage from "./storage"
+import project from "./project.js"
 
 export default class UI{
 
@@ -19,10 +20,7 @@ export default class UI{
     
     static loadInboxPage(){
         title.innerHTML = "Inbox"
- 
-        taskList.innerHTML = ""
-        storage.taskStorage.map(task => UI.createTaskDiv(task))
-        UI.createTaskFunction("none") 
+        UI.refreshTaskList()
     }
 
     static loadTodayPage(){
@@ -38,8 +36,9 @@ export default class UI{
 
     static createTaskFunction(project){
         const taskList = document.getElementById("taskList")
-        taskList.innerHTML += `
-        <div id="addTaskFunction">
+        const taskFunction = document.createElement("div")
+        taskFunction.setAttribute("id","addTaskFunction")
+        taskFunction.innerHTML += `
         <div id="addTask">Add Task</div>
         <div id="addTaskPopup">
             <input id="text-input-popup" type="text">
@@ -48,19 +47,27 @@ export default class UI{
                 <button id="button-add-popup">Add</button>
                 <button id="button-cancel-popup">Cancel</button>
             </div>
-        </div>
-    </div>`
-
+        </div>`
+        taskList.appendChild(taskFunction)
     UI.initTaskButtons(project)
     }
     static initTaskButtons(project){
         const textInput = document.getElementById("text-input-popup")
-        const dateInput = document.getElementById("text-input-popup")
+        const dateInput = document.getElementById("date-input-popup")
         const buttonAdd = document.getElementById("button-add-popup")
         const buttonCancel = document.getElementById("button-cancel-popup")
 
         buttonAdd.addEventListener("click", () =>{
-            storage.createNewTask(project)
+            if(textInput.value === ""){
+                console.log("must name")
+            }
+            else if(dateInput.value === ""){
+                console.log("must date")
+            }
+            else{
+                storage.createNewTask(project)
+                UI.refreshTaskList(project)
+            }
             
         })
     }
@@ -68,12 +75,35 @@ export default class UI{
     static createTaskDiv(task){
         const taskList = document.getElementById("taskList")
         const taskDiv = document.createElement("div")
+        const taskName = task.name
+        const taskDate = task.date
         taskDiv.classList.add("task")
         taskDiv.innerHTML += `
-        <div class="class-name">${task.name}</div>
-        <div class="class-date>${task.date}</div>
+        <div class="class-name">${taskName}</div>
+        <div class="class-date">${taskDate}</div>
         `
+        const removeButton = document.createElement("div")
+        removeButton.classList.add("removebutton")
+        removeButton.innerHTML = "X"
+        removeButton.addEventListener("click", () => {
+            console.log(taskName)
+            storage.removeFromStorage(taskName)
+            UI.refreshTaskList()
+        })
+            //storage.removeFromStorage(taskName)
+            //UI.refreshTaskList()
+        
+        taskDiv.appendChild(removeButton)
         taskList.appendChild(taskDiv)
     }
 
+    static refreshTaskList(){
+        taskList.innerHTML = ""
+        if(title.innerHTML === "Inbox"){
+            storage.taskStorage.map(task => UI.createTaskDiv(task))
+            UI.createTaskFunction("none") 
+        }
+    }
+
 }
+
