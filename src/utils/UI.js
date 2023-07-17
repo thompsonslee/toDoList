@@ -1,11 +1,8 @@
-import task from "./UI.js"
 import storage from "./storage"
-import project from "./project.js"
 
 export default class UI{
 
     static loadHomepage(){
-
         const title = document.getElementById("title")
         const inbox = document.getElementById("inbox")
         const today = document.getElementById("today")
@@ -59,13 +56,13 @@ export default class UI{
 
     static loadTodayPage(){
         title.innerHTML = "Today"
-        taskList.innerHTML = ""
+        UI.refreshTaskList()
 
     }
 
     static loadWeekPage(){
         title.innerHTML = "This Week"
-        taskList.innerHTML = ""
+        UI.refreshTaskList()
     }
 
     static createTaskFunction(project){
@@ -110,7 +107,7 @@ export default class UI{
         const taskList = document.getElementById("taskList")
         const taskDiv = document.createElement("div")
         const taskName = task.name
-        const taskDate = task.date
+        const taskDate = task.getFormatedDate()
         taskDiv.classList.add("task")
         taskDiv.innerHTML += `
         <div class="class-name">${taskName}</div>
@@ -124,8 +121,6 @@ export default class UI{
             storage.removeFromStorage(taskName)
             UI.refreshTaskList()
         })
-            //storage.removeFromStorage(taskName)
-            //UI.refreshTaskList()
         
         taskDiv.appendChild(removeButton)
         taskList.appendChild(taskDiv)
@@ -136,6 +131,12 @@ export default class UI{
         if(title.innerHTML === "Inbox"){
             storage.taskStorage.map(task => UI.createTaskDiv(task))
             UI.createTaskFunction("none") 
+        }
+        else if(title.innerHTML === "Today"){
+            storage.getDayTasks().map(task => UI.createTaskDiv(task))
+        }
+        else if(title.innerHTML === "This Week"){
+            storage.getWeekTasks().map(task => UI.createTaskDiv(task))
         }
         else{
             storage.getTasksForProject(title.innerHTML).map(task => UI.createTaskDiv(task))

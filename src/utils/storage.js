@@ -1,10 +1,11 @@
 import task from "./task.js"
-import UI from "./UI.js"
+import dateFunctions from "./dateFunctions.js"
 
 export default class storage{
 
     static taskStorage = []
     static projectStorage = []
+
 
     static createNewProject(){
         const project = document.getElementById("project-input").value
@@ -14,22 +15,19 @@ export default class storage{
 
     static createNewTask(project){
         const name = document.getElementById("text-input-popup").value
-        const date = document.getElementById("date-input-popup").value
-        
+        const date = new Date((document.getElementById("date-input-popup").value))
         let Task = new task(name,date,project)
         this.addToStorage(Task)
     }
 
     static addToStorage(task){
         storage.taskStorage.push(task)
-        console.log (storage.taskStorage)
     }
     static removeFromStorage(taskName){
         for(let i = 0 ; i < storage.taskStorage.length ; i++){
             console.log(storage.taskStorage[i])
             if (storage.taskStorage[i].name === taskName){
                 storage.taskStorage.splice(i,1)
-                console.log(storage.taskStorage)
             }
         }
     }
@@ -42,40 +40,21 @@ export default class storage{
         }
         return thisProjectStorage
     }
-}
+
+    static getDayTasks(){
+        const currentDate = dateFunctions().formatDate(new Date())
+        const thisDayStorage = storage.taskStorage.filter(task => 
+            task.getFormatedDate() === currentDate           
+        )
+        return thisDayStorage       
+    }
     
-
-    /*
-
-    getWeekTasks = () =>{
-        const weekTasks = []
-        for(let i = 0; i < taskStorage.length ; i++){
-            for(let j = 0; j < 7 ; j++){
-                let weekDate = currentDate.setDate(date.getDate() + j)
-                if (taskStorage[i].date === weekDate){
-                    weekTasks.push(taskStorage[i])
-                }
-            }
-        }
-        return weekTasks
+    static getWeekTasks(){
+        
+        const thisWeekStorage = storage.taskStorage.filter(task =>
+            task.isThisWeek()
+        )
+        return thisWeekStorage
     }
 
-    getProjectTasks = (project) =>{
-        let projectArray = []
-        for(let i = 0; i < taskStorage.length ; i++){
-            if(taskStorage[i].project === project){
-                projectArray.push(taskStorage[i])
-            }
-        }
-        return projectArray
-    }
-
-    createNewTask = () =>{
-        const name = document.getElementById("text-input-popup").value
-        const date = document.getElementById("date-input-popup").value
-
-        const classToStore = new task(name,date,"none")
-
-        addToStorage(classToStore)
-    }
-}*/
+}
