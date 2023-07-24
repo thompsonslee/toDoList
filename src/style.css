@@ -1,22 +1,164 @@
-*{
-    padding: 0;
-    margin: 0;
+:root {
+    --White: #fafafa;
+    --off-White: #e5e5e5;
+    --lightgray: #d4d4d4;
+    --gray: #737373;
+    --red: #fca5a5;
+    --green: #86efac;
 
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./Roboto-Light.ttf');
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 html,body,#main{
     height: 100%;
 }
+body {
+    font-family: 'Roboto', sans-serif;
+
+}
+input{
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+}
+ul {
+    list-style-type: none;
+}
+
 
 #header{
+    display: flex;
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    align-items: center;
     width: 100%;
     height: 10%;
     padding: 20px;
-    background-color: gray;
+    background-color: var(--gray)
 }
 #main{
     display: flex;
 }
 #sidebar{
-    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--off-White);
     width: 300px;
 }
+#sidebar h1{
+    padding: 10px 10px;
+}
+#sidebar li,
+#addProject{
+    font-family: inherit;
+    font-size: inherit;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+#sidebar li:hover,
+#addProject:hover,
+#addTask:hover{
+    background-color: var(--lightgray);
+}
+.selected{
+    background-color: var(--lightgray);
+    font-weight: bold;
+}
+
+.input{
+    font-family: 'Roboto', sans-serif;
+    font-size: inherit;
+    width: 100%;
+    border: 1px solid;
+    border-color: gray;
+    border-radius: 5px;
+    padding: 10px;
+}
+#project-input{
+    margin-bottom: 10px;
+}
+#addProject{
+    margin-top: 10px;
+}
+#project-popup{
+    padding: 10px;
+}
+#project-popup-buttons{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+#view{
+    background-color: var(--White);
+    width: 100%;
+    padding: 40px;
+}
+
+#addTask-input-container{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+#addTask-input-container > input{
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+.hidden{
+    display: none;
+}
+
+#popup-buttons{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+#project-add-button,
+#button-add-popup{
+    background-color: var(--green);
+
+}
+#project-cancel-button,
+#button-cancel-popup{
+    background-color: var(--red);
+}
+#button-add-popup,
+#button-cancel-popup,
+#project-add-button,
+#project-cancel-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    font-weight: bold;
+}
+#addTask{
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.task{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+}
+.task-right-panel{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+

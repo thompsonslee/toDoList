@@ -11,19 +11,19 @@
     <div id="header">ToDo List</div>
     <div id="main">
         <div id="sidebar">
-            <div id="defaults">
-                <div id="inbox">Inbox</div>
-                <div id="today">Today</div>
-                <div id="week">This week</div>
-            </div>
+            <ul id="defaults">
+                <li id="inbox" class="selected">Inbox</li>
+                <li id="today">Today</li>
+                <li id="week">This Week</li>
+            </ul>
             <h1>Projects</h1>
             <ul id="projects-list"></ul>
-            <div id="addproject">Add Project</div>
-            <div id="project-popup">
-                <input id="project-input" type="text">
+            <div id="addProject">Add Project</div>
+            <div id="project-popup" class="hidden">
+                <input id="project-input" class ="input" type="text">
                 <div id="project-popup-buttons">
-                    <div id="project-add-button">Add</div>
-                    <div id="project-cancel-button">Cancel</div>
+                    <div id="project-add-button" class="input">Add</div>
+                    <div id="project-cancel-button" class="input">Cancel</div>
                 </div>
             </div>
         </div>
