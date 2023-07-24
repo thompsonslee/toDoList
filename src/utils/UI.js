@@ -9,13 +9,13 @@ export default class UI{
         const week = document.getElementById("week")
 
         inbox.addEventListener("click",(e) => {
-            UI.loadInboxPage
+            UI.loadInboxPage()
             UI.highlightSelected(e.target)})
         today.addEventListener("click", (e) => {
-            UI.loadTodayPage
+            UI.loadTodayPage()
             UI.highlightSelected(e.target)})
         week.addEventListener("click", (e) => {
-            UI.loadWeekPage
+            UI.loadWeekPage()
             UI.highlightSelected(e.target)})
         UI.initProjectButtons()
         UI.loadInboxPage()
@@ -96,8 +96,6 @@ export default class UI{
     static highlightSelected(element){
         const lastSelected = document.querySelector(".selected")
         lastSelected.classList.remove("selected")
-        console.log(lastSelected)
-        console.log(element)
         element.classList.add("selected")
     }
 
